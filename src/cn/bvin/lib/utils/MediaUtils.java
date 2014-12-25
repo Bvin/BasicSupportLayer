@@ -1,4 +1,4 @@
-package cn.bvin.app.utils;
+package cn.bvin.lib.utils;
 
 import com.google.common.base.Splitter;
 

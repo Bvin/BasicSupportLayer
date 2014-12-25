@@ -1,4 +1,4 @@
-package cn.bvin.app.utils;
+package cn.bvin.lib.utils;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;

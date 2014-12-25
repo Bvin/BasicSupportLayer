@@ -1,4 +1,4 @@
-package cn.bvin.app.utils;
+package cn.bvin.lib.utils;
 
 import android.app.admin.DeviceAdminReceiver;
 import android.app.admin.DevicePolicyManager;

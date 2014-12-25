@@ -9,4 +9,4 @@
  * @date: 2014年12月4日 下午4:23:17
  * @version: V1.0
  */
-package cn.bvin.app.utils;
+package cn.bvin.lib.utils;

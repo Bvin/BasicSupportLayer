@@ -1,4 +1,4 @@
-package cn.bvin.app.network;
+package cn.bvin.lib.network;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;

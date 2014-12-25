@@ -1,4 +1,4 @@
-package cn.bvin.app.manager;
+package cn.bvin.lib.manager;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -9,7 +9,8 @@ import java.net.URL;
 
 
 
-import cn.bvin.app.network.OkHttpStack;
+
+import cn.bvin.lib.network.OkHttpStack;
 
 import com.android.volley.Cache;
 import com.android.volley.Network;
