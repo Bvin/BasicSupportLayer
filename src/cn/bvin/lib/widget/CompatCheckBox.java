@@ -1,6 +1,6 @@
 package cn.bvin.lib.widget;
 
-import cn.bvin.lib.basicsupport.R;
+import cn.bvin.lib.basic_support.R;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
