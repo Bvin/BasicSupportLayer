@@ -12,6 +12,10 @@ import java.text.DecimalFormat;
 import android.content.Context;
 import android.os.Environment;
 import android.os.StatFs;
+import android.text.InputFilter;
+import android.text.method.DigitsKeyListener;
+import android.view.View;
+import android.widget.EditText;
 
 public class SystemUtils {
 
@@ -150,6 +154,32 @@ public class SystemUtils {
 			}
 			return file;
 	        
+		}
+	}
+	
+	public static class ViewUtils {
+		
+		/**还没有对Invisible进行处理*/
+		public static void setVisibility(View view,boolean visible) {
+			view.setVisibility(visible?View.VISIBLE:View.GONE);
+		}
+		
+		/**
+		 * 
+		 * @Title: setInputPolicy 
+		 * @Description: 为EditText设置输入策略
+		 * @param editText 目标输入框
+		 * @param inputType 输入类型
+		 * @param accepted 接收输入的字符，设置了这个就默认了一个KeyListener
+		 * @param maxLength 最大输入字符数，默认设置Filters
+		 * @return: void
+		 */
+		public static void setInputPolicy(EditText editText,int inputType,String accepted,int maxLength) {
+			if (editText==null) return;
+			editText.setInputType(inputType);
+			editText.setKeyListener(DigitsKeyListener.getInstance(accepted));
+			InputFilter[] filters = {new InputFilter.LengthFilter(maxLength)};  
+			editText.setFilters(filters); 
 		}
 	}
 }
