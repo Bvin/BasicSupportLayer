@@ -52,22 +52,27 @@ public class NetService extends Service implements NetworkWatcher{
 			}
 	}
 
+	/**网络已连接*/
 	protected void onNetworkConnected(){
 		
 	}
 	
+	/**网络已断开*/
 	protected void onNetworkDisconnect(){
 		
 	}
 	
+	/**已连接至手机网络*/
 	protected void onMobileNetworkSwitch(){
 		onNetworkConnected();
 	}
 	
+	/**已连接至wifi网络*/
 	protected void onWifiNetworkswitch(){
 		onNetworkConnected();
 	}
 	
+	/**是否连接上网络*/
 	protected boolean isNetworkAvailable() {
 		return helper.isNetworkAvailable(getApplicationContext());
 	}
