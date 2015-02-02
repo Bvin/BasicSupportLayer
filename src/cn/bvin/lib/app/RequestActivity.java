@@ -4,7 +4,7 @@ import android.text.TextUtils;
 import cn.bvin.lib.debug.SimpleLogger;
 import cn.bvin.lib.interf.RequestListener;
 import cn.bvin.lib.manager.RequestManager;
-import cn.bvin.lib.request.PostRequest;
+import cn.bvin.lib.request.BvinRequest;
 
 import com.android.volley.NoConnectionError;
 import com.android.volley.ParseError;
@@ -18,7 +18,7 @@ import com.android.volley.VolleyError;
 public class RequestActivity<T> extends NetActivity implements RequestListener<T>,Response.ErrorListener, Listener<T> {
 
 	private Request<T> request;// 当前请求，保持唯一
-	protected PlaceViewHolder mPlaceViewHolder;// 请求占位视图
+	protected AbstractRPFragment mPlaceViewHolder;// 请求占位视图
 	
 	@Override
 	public void onResponse(T arg0) {
@@ -60,12 +60,12 @@ public class RequestActivity<T> extends NetActivity implements RequestListener<T
 
 	@Override
 	public void onRequestStart(Request<T> resquest) {
-		if (resquest instanceof PostRequest) {
-			SimpleLogger.log_i("onRequestStart", ((PostRequest) resquest).getDebugUrl());
+		if (resquest instanceof BvinRequest) {
+			SimpleLogger.log_i("onRequestStart", ((BvinRequest) resquest).getDebugUrl());
 		} else {
 			SimpleLogger.log_i("onRequestStart", resquest.getUrl());
 		}
-		if (mPlaceViewHolder != null)
+		if (mPlaceViewHolder != null) {}
 			mPlaceViewHolder.resetHoldView();
 		
 	}
@@ -73,14 +73,14 @@ public class RequestActivity<T> extends NetActivity implements RequestListener<T
 	@Override
 	public void onRequestSuccess(T result) {
 		// 返回成功不一定就真的成功，这里移交到具体的类去处理
-		if (mPlaceViewHolder != null)// 请求成功把LoadingView设置为GONE
-			mPlaceViewHolder.setLoadingViewVisibility(false);
+		if (mPlaceViewHolder != null) {}// 请求成功把LoadingView设置为GONE
+			mPlaceViewHolder.hideLoadingProgress();;
 	}
 
 	@Override
 	public void onRequestFailure(VolleyError error) {
 		if (mPlaceViewHolder != null) {
-			mPlaceViewHolder.setLoadingViewVisibility(false);
+			mPlaceViewHolder.hideLoadingProgress();
 			if (error instanceof NoConnectionError) {// 错误界面
 				mPlaceViewHolder.setErrorTips("服务器连接失败");
 			} else if (error instanceof TimeoutError) {
