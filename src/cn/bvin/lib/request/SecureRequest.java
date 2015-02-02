@@ -7,7 +7,7 @@ import cn.bvin.tools.secure.ParamsEncoder.Mode;
 
 import com.android.volley.Response.ErrorListener;
 
-public abstract class SecureRequest<T> extends PostRequest<T>{
+public abstract class SecureRequest<T> extends BvinRequest<T>{
 
 	Mode mode = null;
 	

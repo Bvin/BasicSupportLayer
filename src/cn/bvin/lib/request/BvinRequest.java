@@ -11,17 +11,40 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response.ErrorListener;
 
-public abstract class PostRequest<T> extends Request<T>{
+/***
+ * 
+ * @ClassName: BvinRequest 
+ * @Description: 有参数Map集合就用Post，没有就会走Get
+ * @author: Bvin
+ * @date: 2015年2月2日 下午2:12:50 
+ * @param <T>
+ */
+public abstract class BvinRequest<T> extends Request<T>{
 
 	protected Map<String, Object> params;
 	
-	public PostRequest(String url, Map<String, Object> params, ErrorListener listener) {
+	/**
+	 * 
+	 * @Title:BvinRequest
+	 * @Description:Post请求
+	 * @param url 请求地址
+	 * @param params 参数集合
+	 * @param listener 请求出错监听器
+	 */
+	public BvinRequest(String url, Map<String, Object> params, ErrorListener listener) {
 		super(Request.Method.POST, url, listener);
 		this.params = params;
 	}
 
-	public PostRequest(String url,ErrorListener listener) {
-		super(Request.Method.POST, url, listener);
+	/**
+	 * 
+	 * @Title:BvinRequest
+	 * @Description:Get请求
+	 * @param url 请求地址
+	 * @param listener 请求出错监听器
+	 */
+	public BvinRequest(String url,ErrorListener listener) {
+		super(Request.Method.GET, url, listener);
 	}
 	
 	@Override
@@ -33,6 +56,7 @@ public abstract class PostRequest<T> extends Request<T>{
 		}
 	}
 
+	/**只拼接了参数，没有作任何加密，如需要需要，重写这个方法*/
 	protected byte[] encodeParameters(Map<String, Object> params, String paramsEncoding) {
         try {
         	String encodedStr = StringUtils.getStringFromMap(params);
