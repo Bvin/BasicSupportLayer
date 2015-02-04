@@ -135,6 +135,12 @@ public abstract class AbstractRPFragment extends WiseFragment{
 
 	public void resetHoldView() {
 		//TODO 如果有多次请求的话，在请求开始的时候需要重置HoldView
-		
+		setEmptyFrameVisibility(false);
+		setErrorFrameVisibility(false);
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public RequestActivity getRequestActivity() {
+		return (RequestActivity) getActivity();
 	}
 }
