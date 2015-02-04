@@ -1,5 +1,6 @@
 package cn.bvin.lib.app;
 
+import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import cn.bvin.lib.debug.SimpleLogger;
 import cn.bvin.lib.interf.RequestListener;
@@ -22,12 +23,12 @@ public class RequestActivity<T> extends NetActivity implements RequestListener<T
 	
 	@Override
 	public void onResponse(T arg0) {
-		
+		onRequestSuccess(arg0);
 	}
 
 	@Override
 	public void onErrorResponse(VolleyError arg0) {
-		
+		onRequestFailure(arg0);
 	}
 
 	@Override
@@ -58,25 +59,47 @@ public class RequestActivity<T> extends NetActivity implements RequestListener<T
 	     addRequest(request);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void onRequestStart(Request<T> resquest) {
 		if (resquest instanceof BvinRequest) {
-			SimpleLogger.log_i("onRequestStart", ((BvinRequest) resquest).getDebugUrl());
+			SimpleLogger.log_i("onRequestStart", ((BvinRequest<T>) resquest).getDebugUrl());
 		} else {
 			SimpleLogger.log_i("onRequestStart", resquest.getUrl());
 		}
-		if (mPlaceViewHolder != null) {}
+		//先让请求占位重置视图
+		if (mPlaceViewHolder != null) {
 			mPlaceViewHolder.resetHoldView();
-		
+			mPlaceViewHolder.showLoadingProgress();
+		}
+			
+		//再找出并通知包含的RequestFragment回调onRequestStart
+		if (!getSupportFragmentManager().getFragments().isEmpty()) {
+			for (Fragment fragment : getSupportFragmentManager().getFragments()) {
+				if (fragment instanceof RequestFragment) {
+						((RequestFragment<T>)fragment).onRequestStart(request);
+					}
+				}
+		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void onRequestSuccess(T result) {
 		// 返回成功不一定就真的成功，这里移交到具体的类去处理
 		if (mPlaceViewHolder != null) {}// 请求成功把LoadingView设置为GONE
-			mPlaceViewHolder.hideLoadingProgress();;
+			mPlaceViewHolder.hideLoadingProgress();
+		//再找出并通知包含的RequestFragment回调onRequestSuccess
+		if (!getSupportFragmentManager().getFragments().isEmpty()) {
+			for (Fragment fragment : getSupportFragmentManager().getFragments()) {
+				if (fragment instanceof RequestFragment) {
+						((RequestFragment<T>)fragment).onRequestSuccess(result);
+					}
+				}
+		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void onRequestFailure(VolleyError error) {
 		if (mPlaceViewHolder != null) {
@@ -92,6 +115,14 @@ public class RequestActivity<T> extends NetActivity implements RequestListener<T
 			} else {
 				mPlaceViewHolder.setErrorTips("未知错误");
 			}
+		}
+		//再找出并通知包含的RequestFragment回调onRequestSuccess
+		if (!getSupportFragmentManager().getFragments().isEmpty()) {
+			for (Fragment fragment : getSupportFragmentManager().getFragments()) {
+				if (fragment instanceof RequestFragment) {
+						((RequestFragment<T>)fragment).onRequestFailure(error);
+					}
+				}
 		}
 	}
 	
