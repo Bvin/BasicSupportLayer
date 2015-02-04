@@ -19,7 +19,7 @@ import com.android.volley.VolleyError;
 public class RequestActivity<T> extends NetActivity implements RequestListener<T>,Response.ErrorListener, Listener<T> {
 
 	private Request<T> request;// 当前请求，保持唯一
-	protected AbstractRPFragment mPlaceViewHolder;// 请求占位视图
+	protected AbstractRPFragment mRequestHolderFragment;// 请求占位视图
 	
 	@Override
 	public void onResponse(T arg0) {
@@ -68,9 +68,9 @@ public class RequestActivity<T> extends NetActivity implements RequestListener<T
 			SimpleLogger.log_i("onRequestStart", resquest.getUrl());
 		}
 		//先让请求占位重置视图
-		if (mPlaceViewHolder != null) {
-			mPlaceViewHolder.resetHoldView();
-			mPlaceViewHolder.showLoadingProgress();
+		if (mRequestHolderFragment != null) {
+			mRequestHolderFragment.resetHoldView();
+			mRequestHolderFragment.showLoadingProgress();
 		}
 			
 		//再找出并通知包含的RequestFragment回调onRequestStart
@@ -87,8 +87,8 @@ public class RequestActivity<T> extends NetActivity implements RequestListener<T
 	@Override
 	public void onRequestSuccess(T result) {
 		// 返回成功不一定就真的成功，这里移交到具体的类去处理
-		if (mPlaceViewHolder != null) {}// 请求成功把LoadingView设置为GONE
-			mPlaceViewHolder.hideLoadingProgress();
+		if (mRequestHolderFragment != null) {}// 请求成功把LoadingView设置为GONE
+			mRequestHolderFragment.hideLoadingProgress();
 		//再找出并通知包含的RequestFragment回调onRequestSuccess
 		if (!getSupportFragmentManager().getFragments().isEmpty()) {
 			for (Fragment fragment : getSupportFragmentManager().getFragments()) {
@@ -102,18 +102,18 @@ public class RequestActivity<T> extends NetActivity implements RequestListener<T
 	@SuppressWarnings("unchecked")
 	@Override
 	public void onRequestFailure(VolleyError error) {
-		if (mPlaceViewHolder != null) {
-			mPlaceViewHolder.hideLoadingProgress();
+		if (mRequestHolderFragment != null) {
+			mRequestHolderFragment.hideLoadingProgress();
 			if (error instanceof NoConnectionError) {// 错误界面
-				mPlaceViewHolder.setErrorTips("服务器连接失败");
+				mRequestHolderFragment.setErrorTips("服务器连接失败");
 			} else if (error instanceof TimeoutError) {
-				mPlaceViewHolder.setErrorTips("网络超时");
+				mRequestHolderFragment.setErrorTips("网络超时");
 			} else if (error instanceof ParseError) {
-				mPlaceViewHolder.setErrorTips("解析异常");
+				mRequestHolderFragment.setErrorTips("解析异常");
 			} else if (error instanceof ServerError) {
-				mPlaceViewHolder.setErrorTips("服务器异常");
+				mRequestHolderFragment.setErrorTips("服务器异常");
 			} else {
-				mPlaceViewHolder.setErrorTips("未知错误");
+				mRequestHolderFragment.setErrorTips("未知错误");
 			}
 		}
 		//再找出并通知包含的RequestFragment回调onRequestSuccess
