@@ -55,8 +55,10 @@ public class RequestActivity<T> extends NetActivity implements RequestListener<T
 
 	@Override
 	public void reloadRequest() {
-		 SimpleLogger.log_i("reloadRequest", request.getUrl());
-	     addRequest(request);
+		if (request!=null&&!TextUtils.isEmpty(request.getUrl())) {
+			 SimpleLogger.log_i("reloadRequest", request.getUrl());
+		     addRequest(request);
+		}
 	}
 
 	@SuppressWarnings("unchecked")
@@ -77,9 +79,11 @@ public class RequestActivity<T> extends NetActivity implements RequestListener<T
 		if (!getSupportFragmentManager().getFragments().isEmpty()) {
 			for (Fragment fragment : getSupportFragmentManager().getFragments()) {
 				if (fragment instanceof RequestFragment) {
-						((RequestFragment<T>)fragment).onRequestStart(request);
+					if (((RequestFragment<T>) fragment).isCurrentRequest()) {
+						((RequestFragment<T>) fragment).onRequestStart(request);
 					}
 				}
+			}
 		}
 	}
 
@@ -93,9 +97,11 @@ public class RequestActivity<T> extends NetActivity implements RequestListener<T
 		if (!getSupportFragmentManager().getFragments().isEmpty()) {
 			for (Fragment fragment : getSupportFragmentManager().getFragments()) {
 				if (fragment instanceof RequestFragment) {
+					if (((RequestFragment<T>) fragment).isCurrentRequest()) {
 						((RequestFragment<T>)fragment).onRequestSuccess(result);
 					}
 				}
+			}
 		}
 	}
 
@@ -120,7 +126,9 @@ public class RequestActivity<T> extends NetActivity implements RequestListener<T
 		if (!getSupportFragmentManager().getFragments().isEmpty()) {
 			for (Fragment fragment : getSupportFragmentManager().getFragments()) {
 				if (fragment instanceof RequestFragment) {
+					if (((RequestFragment<T>) fragment).isCurrentRequest()) {
 						((RequestFragment<T>)fragment).onRequestFailure(error);
+						}
 					}
 				}
 		}
