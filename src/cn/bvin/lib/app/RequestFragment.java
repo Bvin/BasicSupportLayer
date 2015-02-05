@@ -15,6 +15,7 @@ import com.android.volley.VolleyError;
  */
 public class RequestFragment<T> extends NetFragment implements RequestListener<T>{
 
+	private boolean isCurrentRequest;
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -60,4 +61,14 @@ public class RequestFragment<T> extends NetFragment implements RequestListener<T
 	public RequestActivity<T> getRequestActivity() {
 		return (RequestActivity<T>) getActivity();
 	}
+
+	public boolean isCurrentRequest() {
+		return isCurrentRequest;
+	}
+
+	public void setCurrentRequest(boolean isCurrentRequest) {
+		this.isCurrentRequest = isCurrentRequest;
+	}
+	
+	
 }
