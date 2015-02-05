@@ -1,9 +1,8 @@
 package cn.bvin.lib.app;
 
 import cn.bvin.lib.app.TestLauncher.LaunchMeta;
-import android.support.v4.app.FragmentActivity;
 
-public class TestLaunchActivity extends FragmentActivity{
+public class TestLaunchActivity extends WiseActivity{
 
 	private TestLauncher mTestLauncher;
 	
