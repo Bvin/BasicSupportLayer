@@ -1,6 +1,7 @@
 package cn.bvin.lib.app;
 
 import cn.bvin.lib.interf.RequestListener;
+import cn.bvin.lib.interf.RequestOperate;
 
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
@@ -13,7 +14,7 @@ import com.android.volley.VolleyError;
  * @date: 2015年2月3日 上午11:51:57 
  * @param <T>
  */
-public class RequestFragment<T> extends NetFragment implements RequestListener<T>{
+public class RequestFragment<T> extends NetFragment implements RequestOperate<T>,RequestListener<T>{
 
 	private boolean isCurrentRequest;
 

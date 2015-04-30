@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import cn.bvin.lib.debug.SimpleLogger;
 import cn.bvin.lib.interf.RequestListener;
+import cn.bvin.lib.interf.RequestOperate;
 import cn.bvin.lib.manager.RequestManager;
 import cn.bvin.lib.request.BvinRequest;
 
@@ -16,7 +17,7 @@ import com.android.volley.TimeoutError;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 
-public class RequestActivity<T> extends NetActivity implements RequestListener<T>,Response.ErrorListener, Listener<T> {
+public class RequestActivity<T> extends NetActivity implements RequestOperate<T>,RequestListener<T>,Response.ErrorListener, Listener<T> {
 
 	private Request<T> request;// 当前请求，保持唯一
 	protected AbstractRPFragment mRequestHolderFragment;// 请求占位视图

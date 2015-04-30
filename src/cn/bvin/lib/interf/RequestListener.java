@@ -5,12 +5,6 @@ import com.android.volley.VolleyError;
 
 public interface RequestListener<T> {
 
-	public void addRequest(Request<T> resquest);
-	
-	public void cancelRequest();
-	
-	public void reloadRequest();
-	
 	public void onRequestStart(Request<T> resquest);
 	
 	public void onRequestSuccess(T result);
